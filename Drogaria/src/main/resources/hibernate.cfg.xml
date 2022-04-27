@@ -33,7 +33,12 @@
 		<mapping class="br.com.luan.drogaria.domain.Estado" />
 		<mapping class="br.com.luan.drogaria.domain.Cidade" />
 		<mapping class="br.com.luan.drogaria.domain.Fabricante" />
-
+		<mapping class="br.com.luan.drogaria.domain.Produto" />
+		<mapping class="br.com.luan.drogaria.domain.Pessoa" />
+		<mapping class="br.com.luan.drogaria.domain.Cliente" />
+		<mapping class="br.com.luan.drogaria.domain.Funcionario" />
+		<mapping class="br.com.luan.drogaria.domain.Usuario" />
+		<mapping class="br.com.luan.drogaria.domain.Venda" />
 	</session-factory>
 
 </hibernate-configuration>
