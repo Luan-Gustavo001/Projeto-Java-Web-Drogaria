@@ -27,7 +27,7 @@
 		<property name="show_sql">true</property>
 
 		<!-- Cria as tabelas do banco de dados -->
-		<property name="hbm2ddl.auto">create</property>
+		<property name="hbm2ddl.auto">validate</property>
 
 		<!-- Mapeamento das entidades -->
 		<mapping class="br.com.luan.drogaria.domain.Estado" />
@@ -39,6 +39,7 @@
 		<mapping class="br.com.luan.drogaria.domain.Funcionario" />
 		<mapping class="br.com.luan.drogaria.domain.Usuario" />
 		<mapping class="br.com.luan.drogaria.domain.Venda" />
+		<mapping class="br.com.luan.drogaria.domain.ItemVenda" />
 	</session-factory>
 
 </hibernate-configuration>
