@@ -8,6 +8,7 @@ import org.junit.Test;
 import br.com.luan.drogaria.domain.Estado;
 
 public class EstadoDAOTest {
+	// -------------- LISTAR ----------------------
 	@Test
 	@Ignore
 	public void salvar() {
@@ -18,6 +19,7 @@ public class EstadoDAOTest {
 		EstadoDAO estadoDAO = new EstadoDAO();
 		estadoDAO.salvar(estado);
 	}
+	// -------------- LISTAR ----------------------
 	@Test
 	@Ignore
 	 public void listar() {
@@ -30,6 +32,7 @@ public class EstadoDAOTest {
 			 System.out.println(estado.getCodigo() + " - " + estado.getSigla() + " - " + estado.getNome());
 		 }
 	 }
+	// -------------- BUSCAR ----------------------
 	@Test
 	@Ignore
 	public void buscar() {
@@ -44,6 +47,8 @@ public class EstadoDAOTest {
 		System.out.println(estado.getCodigo() + " - " + estado.getSigla() + " - " + estado.getNome());
 		}
 	}
+	// -------------- EXCLUIR ----------------------
+	@Ignore
 	@Test
 	public void excluir() {
 		Long codigo = 1L;
@@ -60,4 +65,28 @@ public class EstadoDAOTest {
 		}
 		
 	}
+	// -------------- EDITAR ----------------------
+	@Test
+	@Ignore
+	public void editar() {
+		Long codigo = 7L;
+		EstadoDAO estadoDAO = new EstadoDAO();
+		Estado estado = estadoDAO.buscar(codigo);
+		
+		if(estado == null) {
+			System.out.println("Nao foi encontrado nenhum registro desse Estado");
+		}else {
+			System.out.println("Registro editado - antes :");
+			System.out.println(estado.getCodigo() + " - " + estado.getSigla() + " - " + estado.getNome());
+		
+			estado.setNome("Minas Gerais");
+			estado.setSigla("MG");
+			estadoDAO.editar(estado);
+			
+			System.out.println("Registro editado - depois :");
+			System.out.println(estado.getCodigo() + " - " + estado.getSigla() + " - " + estado.getNome());
+		}
+		
+	}
+
 }
