@@ -1,5 +1,7 @@
 package br.com.luan.drogaria.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -12,7 +14,7 @@ import javax.persistence.TemporalType;
 public class Cliente extends GenericDomain {
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
-	private java.util.Calendar dataCadastro;
+	private Date dataCadastro;
 
 	@Column(nullable = false)
 	private Boolean liberado;
@@ -21,11 +23,11 @@ public class Cliente extends GenericDomain {
 	@JoinColumn(nullable = false)
 	private Pessoa pessoa;
 
-	public java.util.Calendar getDataCadastro() {
+	public Date getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(java.util.Calendar dataCadastro) {
+	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 

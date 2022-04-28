@@ -8,6 +8,7 @@ import org.junit.Test;
 import br.com.luan.drogaria.domain.Pessoa;
 
 public class PessoaDAOTest {
+	//-------------- SALVAR ----------------------
 	@Test
 	@Ignore
 	public void salvar(){
@@ -29,7 +30,7 @@ public class PessoaDAOTest {
 		System.out.println("Pessoa salvo com sucesso");
 		
 	} 
-//-------------- LISTAR ----------------------
+	//-------------- LISTAR ----------------------
 	@Ignore
 	@Test
 	public void listar() {
