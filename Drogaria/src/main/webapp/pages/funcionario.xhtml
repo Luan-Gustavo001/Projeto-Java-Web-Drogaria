@@ -6,21 +6,24 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Cidades</title>
+	<title>Funcionario</title>
 </h:head>
 <h:body>
 	<h:form>
-		<p:panel header="Cidades - Listagem">
+		<p:panel header="Funcionario - Listagem">
 			<p:dataTable emptyMessage="Nenhum Registro Encontrado."
 				paginator="true">
 				<f:facet name="header">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
 				</f:facet>
 
-				<p:column headerText="Cidades">
+				<p:column headerText="Carteira de Trabalho">
 				</p:column>
 
-				<p:column headerText="Estados">
+				<p:column headerText="Data de Adimissão">
+				</p:column>
+
+				<p:column headerText="Nome">
 				</p:column>
 
 				<p:column headerText="Opções">
@@ -33,17 +36,22 @@
 		draggable="false" resizable="false" modal="true" closable="false">
 		<h:form>
 			<h:panelGrid columns="2">
-				<p:outputLabel value="Cidade:" />
-				<p:inputText size="20" maxlength="50" />
+				<p:outputLabel value="Numero da Carteira:" />
+				<p:inputText size="20" maxlength="15" />
+			</h:panelGrid>
+			<p:outputLabel value="Data de Admissão:" />
+			<p:calendar />
 
-				<p:outputLabel value="Estados:" />
-				<p:selectOneMenu filter="true" >
-					<f:selectItem itemValue="" itemLabel="Selecione um Estado"/>
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Pessoa:" />
+				<p:selectOneMenu filter="true">
+					<f:selectItem itemValue="" itemLabel="Selecione uma pessoa" />
 				</p:selectOneMenu>
 			</h:panelGrid>
+
 			<h:panelGrid columns="2">
-			<p:commandButton value="Salvar" />
-			<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide()"/>
+				<p:commandButton value="Salvar" />
+				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide()" />
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>
