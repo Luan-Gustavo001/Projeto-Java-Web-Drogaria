@@ -25,4 +25,8 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+	
+	<listener>
+	<listener-class> br.com.luan.drogaria.util.HibernateContexto</listener-class>
+	</listener>
 </web-app>

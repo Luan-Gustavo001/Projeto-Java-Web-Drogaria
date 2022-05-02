@@ -9,15 +9,22 @@
 	<title>Produtos</title>
 </h:head>
 <h:body>
-	<h:form>
+	<p:growl id="mensagem" />
+	<h:form id="formListagem">
 		<p:panel header="Produtos - Listagem">
 			<p:dataTable emptyMessage="Nenhum Registro Encontrado."
 				paginator="true">
 				<f:facet name="header">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
+					<p:commandButton value="Novo" actionListener="#{produtoBean.novo}"
+						oncomplete="PF('dialogo').show();"
+						update=":mensagem :formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						
+						</p:commandButton>
 				</f:facet>
 
-				<p:column headerText="Produtos">
+				<p:column headerText="Produtos" filterBy="#{produto.descricao}" sortBy="">
 				</p:column>
 
 				<p:column headerText="Quantidade">
@@ -26,7 +33,7 @@
 				<p:column headerText="Preço">
 				</p:column>
 
-				<p:column headerText="Fabrica">
+				<p:column headerText="Fabricante">
 				</p:column>
 				<p:column headerText="Opções">
 				</p:column>
