@@ -7,18 +7,24 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
+//import javax.persistence.EntityManager;
 
 import org.omnifaces.util.Messages;
 
+import br.com.luan.drogaria.dao.FabricanteDAO;
 import br.com.luan.drogaria.dao.ProdutoDAO;
+import br.com.luan.drogaria.domain.Fabricante;
 import br.com.luan.drogaria.domain.Produto;
+
+@SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-@SuppressWarnings("serial")
 public class ProdutoBean implements Serializable {
-	private Produto produto;
+	//EntityManager manager = factory.createEntityManager();
+	private Produto  produto;
 	private List<Produto> produtos;
-
+	private List<Fabricante> fabricantes;
+	
 	public Produto getProduto() {
 		return produto;
 	}
@@ -35,43 +41,64 @@ public class ProdutoBean implements Serializable {
 		this.produtos = produtos;
 	}
 
+	public List<Fabricante> getFabricantes() {
+		return fabricantes;
+	}
+
+	public void setFabricantes(List<Fabricante> fabricantes) {
+		this.fabricantes = fabricantes;
+	}
+
 	@PostConstruct
 	public void listar() {
 		try {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtos = produtoDAO.listar();
 		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao listar os produtoss");
+			Messages.addGlobalError("Ocorreu um erro ao tentar listar os produtos");
 			erro.printStackTrace();
 		}
 	}
-
+	
 	public void novo() {
 		try {
-
 			produto = new Produto();
 
-			ProdutoDAO produtoDAO = new ProdutoDAO();
-			produtos = produtoDAO.listar();
+			FabricanteDAO fabricanteDAO = new FabricanteDAO();
+			fabricantes = fabricanteDAO.listar();
 		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao listar os produtos");
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar gerar um novo produto");
 			erro.printStackTrace();
 		}
 	}
+	
+	public void editar(ActionEvent evento){
+		try {
+			produto = (Produto) evento.getComponent().getAttributes().get("produtoSelecionado");
 
+			FabricanteDAO fabricanteDAO = new FabricanteDAO();
+			fabricantes = fabricanteDAO.listar();
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar selecionar um produto");
+			erro.printStackTrace();
+		}	
+	}
+	
 	public void salvar() {
 		try {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtoDAO.merge(produto);
 
 			produto = new Produto();
-			// EstadoDAO estadoDAO = new EstadoDAO();
-			// estados = estadoDAO.listar();
+
+			FabricanteDAO fabricanteDAO = new FabricanteDAO();
+			fabricantes = fabricanteDAO.listar();
+
 			produtos = produtoDAO.listar();
 
 			Messages.addGlobalInfo("Produto salvo com sucesso");
 		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao tentar salvar um novo produto");
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar salvar o produto");
 			erro.printStackTrace();
 		}
 	}
@@ -85,25 +112,10 @@ public class ProdutoBean implements Serializable {
 
 			produtos = produtoDAO.listar();
 
-			Messages.addGlobalInfo("Produto excluido com sucesso");
-			Messages.addGlobalInfo("Cidade: " + produto.getDescricao());
+			Messages.addGlobalInfo("Produto removido com sucesso");
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar excluir um produto");
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar remover o produto");
 			erro.printStackTrace();
 		}
-	}
-
-	public void editar(ActionEvent evento) {
-		try {
-			produto = (Produto) evento.getComponent().getAttributes().get("produtoSelecionado");
-
-			ProdutoDAO produtoDAO = new ProdutoDAO();
-			produtos = produtoDAO.listar();
-
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao selecionar um produto");
-			erro.printStackTrace();
-		}
-
 	}
 }
