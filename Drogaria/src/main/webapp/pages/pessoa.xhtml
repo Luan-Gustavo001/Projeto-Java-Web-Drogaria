@@ -9,96 +9,153 @@
 	<title>Pessoa</title>
 </h:head>
 <h:body>
-	<h:form>
-		<p:panel header="Pessoa - Listagem">
-			<p:dataTable emptyMessage="Nenhum Registro Encontrado."
-				paginator="true">
+	<p:growl id="mensagem" />
+
+	<h:form id="formListagem">
+		<p:panel header="Pessoas - Listagem">
+			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+				paginator="true" value="#{pessoaBean.pessoas}" var="pessoa" rows="5">
 				<f:facet name="header">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
+					<p:commandButton value="Novo" actionListener="#{pessoaBean.novo}"
+						oncomplete="PF('dialogo').show();"
+						update=":mensagem :formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
 				</f:facet>
 
 				<p:column headerText="Nome">
-				</p:column>
-
-				<p:column headerText="CPF">
+					<h:outputText value="#{pessoa.nome}" />
 				</p:column>
 
 				<p:column headerText="RG">
-				</p:column>
-				
-				<p:column headerText="Rua">
+					<h:outputText value="#{pessoa.rg}" />
 				</p:column>
 
-				<p:column headerText="Numero">
+				<p:column headerText="CPF">
+					<h:outputText value="#{pessoa.cpf}" />
 				</p:column>
 
-				<p:column headerText="Bairro">
-				</p:column>
-				
-				<p:column headerText="Cep">
-				</p:column>
-
-				<p:column headerText="Complemento">
-				</p:column>
-
-				<p:column headerText="Telefone">
-				</p:column>
-
-				<p:column headerText="Celular">
-				</p:column>
-				
-				<p:column headerText="E-mail">
-				</p:column>
-				
 				<p:column headerText="Opções">
-				</p:column>
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{pessoaBean.excluir}"
+						update=":mensagem :formListagem:tabela">
+						<p:confirm header="Confirmação" message="Deseja excluir a pessoa?"
+							icon="ui-icon-alert" />
+						<f:attribute name="pessoaSelecionada" value="#{pessoa}" />
+					</p:commandButton>
 
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{pessoaBean.editar}"
+						update=":mensagem :formCadastro:painel"
+						oncomplete="PF('dialogo').show();">
+						<f:attribute name="pessoaSelecionada" value="#{pessoa}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</p:column>
 			</p:dataTable>
+
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 		</p:panel>
 	</h:form>
-
-	<p:dialog header="Cidades - Cadastro" widgetVar="dialogo"
+	<p:dialog header="Pessoas - Cadastro" widgetVar="dialogo"
 		draggable="false" resizable="false" modal="true" closable="false">
-		<h:panelGrid columns="2">
-				<p:outputLabel value="Nome:" />
-				<p:inputText size="20" maxlength="50" />
+		<h:form id="formCadastro">
+			<h:panelGrid id="painel" columns="2">
+				<p:outputLabel for="nome" value="Nome:" />
+				<p:inputText id="nome" maxlength="50" size="30"
+					value="#{pessoaBean.pessoa.nome}" required="true"
+					requiredMessage="O campo 'Nome' é obrigatório" />
 
-				<p:outputLabel value="CPF:" />
-				<p:inputText size="8" maxlength="14" />
-				
-				<p:outputLabel value="RG:" />
-				<p:inputText size="8" maxlength="12" />
-				
-				<p:outputLabel value="Rua:" />
-				<p:inputText size="10" maxlength="70" />
-				
-				<p:outputLabel value="Numero:" />
-				<p:inputText size="1" maxlength="4" />
-				
-				<p:outputLabel value="Bairro:" />
-				<p:inputText size="10" maxlength="20" />
+				<p:outputLabel for="rg" value="RG:" />
+				<p:inputMask id="rg" mask="99.999.999-9" size="10" 
+				value="#{pessoaBean.pessoa.rg}" required="true"
+				requiredMessage="Campo RG é obrigatório"/>
 
-				<p:outputLabel value="Cep:" />
-				<p:inputText size="6" maxlength="10" />
-				
-				<p:outputLabel value="Complemento:" />
-				<p:inputText size="10" maxlength="10" />
-				
-				<p:outputLabel value="Telefone:" />
-				<p:inputText size="8" maxlength="13" />
-				
-				<p:outputLabel value="Celular:" />
-				<p:inputText size="8" maxlength="14" />
-				
-				<p:outputLabel value="E-mail:" />
-				<p:inputText size="30" maxlength="40" />
-				
+				<p:outputLabel for="cpf" value="CPF:" />
+				<p:inputMask id="cpf" mask="999.999.999-99" size="10" 
+				value="#{pessoaBean.pessoa.cpf}" required="true"
+				requiredMessage="Campo CPF é obrigatório"/>
+
+				<p:outputLabel for="estado" value="Estado:" />
+				<p:selectOneMenu id="estado" filter="true"
+					converter="omnifaces.SelectItemsConverter" 
+					value="#{pessoaBean.estado}">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um estado" />
+					<f:selectItems value="#{pessoaBean.estados}" var="estado"
+						itemValue="#{estado}" itemLabel="#{estado.nome}" />
+						<p:ajax listener="#{pessoaBean.popular()}" update="formCadastro:cidade"/>
+				</p:selectOneMenu>
+
+				<p:outputLabel for="cidade" value="Cidade:" />
+				<p:selectOneMenu id="cidade" filter="true" required="true"
+					requiredMessage="O campo 'Cidade' é obrigatório"
+					converter="omnifaces.SelectItemsConverter"
+					value="#{pessoaBean.pessoa.cidade}">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione uma cidade" />
+					<f:selectItems value="#{pessoaBean.cidades}" var="cidade"
+						itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="rua" value="Rua:" />
+				<p:inputText id="rua" maxlength="100" size="50"
+					value="#{pessoaBean.pessoa.rua}" required="true"
+					requiredMessage="O campo 'Rua' é obrigatório" />
+
+				<p:outputLabel value="Número" />
+				<p:inputText maxlength="5" size="2"
+					value="#{pessoaBean.pessoa.numero}" required="true"
+					requiredMessage="O campo 'Número' é obrigatório"
+					converterMessage="Informe um valor válido para o campo 'Número'"
+					validatorMessage="Informe um valor entre 1 e 32767 para o campo 'Número'">
+					<f:validateLongRange minimum="1" maximum="32767" />
+				</p:inputText>
+
+				<p:outputLabel for="bairro" value="Bairro:" />
+					<p:inputText id="bairro" maxlength="30" size="20"
+						value="#{pessoaBean.pessoa.bairro}" required="true"
+						requiredMessage="O campo 'Bairro' é obrigatório" />
+
+				<p:outputLabel for="cep" value="CEP:" />
+					<p:inputMask id="cep" mask="99999-999" size="5"
+					value="#{pessoaBean.pessoa.cep}" />
+
+				<p:outputLabel for="complemento" value="Complemento:" />
+					<p:inputText id="complemento" maxlength="10" size="10"
+						value="#{pessoaBean.pessoa.complemento}" />
+
+				<p:outputLabel for="telefone" value="Telefone:" />
+					<p:inputMask id="telefone" mask="(99)9999-9999" size="10"
+					value="#{pessoaBean.pessoa.telefone}" required="true"
+						requiredMessage="O campo 'Telefone' é obrigatório" />
+
+				<p:outputLabel for="celular" value="Celular:" />
+					<p:inputMask id="celular" mask="(99)99999-9999" size="10"
+					value="#{pessoaBean.pessoa.celular}" required="true"
+						requiredMessage="O campo 'Celular' é obrigatório"  />
+
+				<p:outputLabel for="email" value="Email:" />
+					<p:inputText id="email" maxlength="100" size="50"
+						value="#{pessoaBean.pessoa.email}" required="true"
+						requiredMessage="O campo 'Email' é obrigatório" />
 			</h:panelGrid>
-			
+
 			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar" />
-				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide()" />
+				<p:commandButton value="Salvar"
+					actionListener="#{pessoaBean.salvar}"
+					update=":mensagem :formCadastro:painel :formListagem:tabela" />
+					
+				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 			</h:panelGrid>
+		</h:form>
 	</p:dialog>
 </h:body>
 </html>

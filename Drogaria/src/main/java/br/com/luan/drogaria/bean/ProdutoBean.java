@@ -7,7 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-//import javax.persistence.EntityManager;
+
 
 import org.omnifaces.util.Messages;
 
@@ -20,7 +20,7 @@ import br.com.luan.drogaria.domain.Produto;
 @ManagedBean
 @ViewScoped
 public class ProdutoBean implements Serializable {
-	//EntityManager manager = factory.createEntityManager();
+	
 	private Produto  produto;
 	private List<Produto> produtos;
 	private List<Fabricante> fabricantes;

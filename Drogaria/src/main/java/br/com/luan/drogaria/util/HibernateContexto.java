@@ -7,13 +7,13 @@ public class HibernateContexto implements ServletContextListener{
 
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
-		HibernateUtil.getFabricaDeSessoes().close();
+		//HibernateUtil.getFabricaDeSessoes().close();
 		
 	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {
-		HibernateUtil.getFabricaDeSessoes();
+		HibernateUtil.getFabricaDeSessoes().close();
 		
 	}
 

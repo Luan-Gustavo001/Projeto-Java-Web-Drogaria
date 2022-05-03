@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.luan.drogaria.util.HibernateUtil;
@@ -51,6 +52,23 @@ public class GenericDAO<Entidade> {
 		}
 				
 	}
+	
+	//-------------- LISTAR ORDENADO ----------------------
+		@SuppressWarnings("unchecked")
+		public List<Entidade> listar(String compoOrdenação) {
+			Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+			try {
+				Criteria consulta = sessao.createCriteria(classe);
+				consulta.addOrder(Order.asc(compoOrdenação));
+				List<Entidade> resultado = consulta.list();
+				return resultado;
+			} catch(RuntimeException erro) {
+				throw erro;
+			} finally {
+				sessao.close();
+			}
+					
+		}
 	//-------------- BUSCAR ----------------------
 	@SuppressWarnings("unchecked")
 	public Entidade buscar(Long codigo) {
