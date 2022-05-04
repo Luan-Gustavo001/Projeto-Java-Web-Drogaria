@@ -7,6 +7,8 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Cliente</title>
+	<h:outputScript library="js" name="scripts.js"/>
+	
 </h:head>
 <h:body>
 	<p:growl id="mensagem" />
@@ -87,18 +89,19 @@
 				
 				<p:selectOneMenu id="pessoa" filter="true" 
 				value="#{clienteBean.cliente.pessoa}" required="true" 
-				requiredMessage="O campo pessoa é obrigatório">
+				requiredMessage="O campo pessoa é obrigatório"
+				converter="omnifaces.SelectItemsConverter">
 				
 				<f:selectItem noSelectionOption="true" itemLabel="Selecione uma pessoa" />
 				
 				<f:selectItems value="#{clienteBean.pessoas}" var="pessoa"
-				itemValue="#{pessoa}" itemLabel="#[pessoa.nome} - #{pessoa.cpf}"/>
+				itemValue="#{pessoa}" itemLabel="#{pessoa.nome} - #{pessoa.cpf}"/>
 			
 				</p:selectOneMenu>
 
 				<p:outputLabel for="dataCadastro" value="Data de Cadastro:" />
 				<p:calendar id="dataCadastro" value="#{clienteBean.cliente.dataCadastro}" required="true"
-				requiredMessage="O campo de data do cadastro é obrogatório"/>
+				requiredMessage="O campo data de cadastro é obrogatório"/>
 
 				<p:outputLabel for="liberado" value="Liberado:" />
 				<p:selectBooleanCheckbox id="liberado"
