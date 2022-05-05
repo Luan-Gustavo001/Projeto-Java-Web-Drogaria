@@ -12,7 +12,7 @@ import javax.persistence.TemporalType;
 
 @SuppressWarnings("serial")
 @Entity
-public class Venda extends GenericDomain{
+public class Venda extends GenericDomain {
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date horario;
@@ -58,7 +58,4 @@ public class Venda extends GenericDomain{
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
-	
-	
-	
 }

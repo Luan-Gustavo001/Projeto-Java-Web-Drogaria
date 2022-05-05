@@ -138,11 +138,11 @@ public class PessoaBean implements Serializable {
 			PessoaDAO pessoaDAO = new PessoaDAO();
 			pessoas = pessoaDAO.listar();
 
-			CidadeDAO cidadeDao = new CidadeDAO();
-			cidades = cidadeDao.listar();
+			CidadeDAO cidadeDAO = new CidadeDAO();
+			cidades = cidadeDAO.listar();
 
-			EstadoDAO estadoDao = new EstadoDAO();
-			estados = estadoDao.listar();
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estados = estadoDAO.listar();
 			
 			estado = pessoa.getCidade().getEstado();
 		} catch (RuntimeException erro) {
