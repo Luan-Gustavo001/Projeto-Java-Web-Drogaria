@@ -1,5 +1,7 @@
 package br.com.luan.drogaria.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -15,7 +17,7 @@ public class Funcionario extends GenericDomain {
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
-	private java.util.Calendar dataCadastro;
+	private Date dataCadastro;
 	
 	@OneToOne
 	@JoinColumn(nullable = false)
@@ -29,11 +31,11 @@ public class Funcionario extends GenericDomain {
 		this.carteiratrabalho = carteiratrabalho;
 	}
 
-	public java.util.Calendar getDataCadastro() {
+	public Date getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(java.util.Calendar dataCadastro) {
+	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 
@@ -44,7 +46,6 @@ public class Funcionario extends GenericDomain {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
-	
 
+	
 }

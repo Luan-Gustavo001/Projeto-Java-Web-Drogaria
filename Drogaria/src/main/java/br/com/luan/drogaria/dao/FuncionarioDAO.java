@@ -6,18 +6,21 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
-import br.com.luan.drogaria.domain.Cliente;
+import br.com.luan.drogaria.domain.Funcionario;
 import br.com.luan.drogaria.util.HibernateUtil;
 
-public class ClienteDAO extends GenericDAO<Cliente>{
+public class FuncionarioDAO extends GenericDAO<Funcionario>{
+	//-------------- LISTAR ORDENADO ----------------------
 	@SuppressWarnings("unchecked")
-	public List<Cliente> listarOrdenado(String compoOrdenação) {
+	public List<Funcionario> listarOrdenado(String compoOrdenação) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try {
-			Criteria consulta = sessao.createCriteria(Cliente.class);
+			Criteria consulta = sessao.createCriteria(Funcionario.class);
 			consulta.createAlias("pessoa", "p");
+			// montando o alias do jeito que quiser
+			//consulta.createAlias("p.cidade", "c");
 			consulta.addOrder(Order.asc("p.nome"));
-			List<Cliente> resultado = consulta.list();
+			List<Funcionario> resultado = consulta.list();
 			return resultado;
 		} catch(RuntimeException erro) {
 			throw erro;
@@ -26,5 +29,4 @@ public class ClienteDAO extends GenericDAO<Cliente>{
 		}
 				
 	}
-
 }
