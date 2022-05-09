@@ -3,8 +3,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="produtos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="04f9f872-daf9-40c8-9a90-ce808b476bcb">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DrograriaAdapter"/>
-	<parameter name="PRODUTO_DESCRICAO" class="java.lang.String"/>
 	<parameter name="FABRICANTE_DESCRICAO" class="java.lang.String"/>
+	<parameter name="PRODUTO_DESCRICAO" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT drogaria.produto.descricao AS pdescricao,
 	drogaria.produto.preco,
@@ -57,7 +57,7 @@ ORDER BY drogaria.produto.descricao ASC,
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" isBold="true" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Relatório de Produtos]]></text>
+				<text><![CDATA[Relatorio de Produtos]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
@@ -79,20 +79,24 @@ ORDER BY drogaria.produto.descricao ASC,
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Preço]]></text>
+				<text><![CDATA[Preco]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="280" y="0" width="100" height="30" uuid="5fcb22ff-4696-4097-92fc-57ec3e955760">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f5773b62-e84e-47ce-ac5d-505914904a9f"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Quantidade]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="380" y="0" width="100" height="30" uuid="56300525-42c4-4796-8893-85366080b969">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8965c4a4-bb85-45c7-b2d5-35a98bdb72fa"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Fabricante]]></text>
 			</staticText>
 		</band>

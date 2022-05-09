@@ -16,7 +16,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.hibernate.Hibernate;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
@@ -165,18 +164,16 @@ public class ProdutoBean implements Serializable {
 	public void imprimir() {
 		try {
 			String caminho = Faces.getRealPath("/reports/produtos.jasper");
-			
+
 			Map<String, Object> parametros = new HashMap<>();
+
+			Connection conexao = HibernateUtil.getConexao();
+
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
 			
-			Connection conexao =HibernateUtil.getConexao();
-			
-			
-		JasperPrint relatorio =	JasperFillManager.fillReport(caminho, parametros, conexao);
-		
-		JasperPrintManager.printReport(relatorio, true);
-		
+			JasperPrintManager.printReport(relatorio, true);
 		} catch (JRException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao tentar gerar o relatório");
+			Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatório");
 			erro.printStackTrace();
 		}
 	}

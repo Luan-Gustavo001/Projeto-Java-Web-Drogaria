@@ -32,12 +32,14 @@
 	</build>
 
 	<repositories>
+	
 		<repository>
 			<id>prime-repo</id>
 			<name>PrimeFaces Maven Repository</name>
 			<url>http://repository.primefaces.org</url>
 			<layout>default</layout>
 		</repository>
+		
 		<repository>
           <id>jasperreports</id>
           <url>http://jasperreports.sourceforge.net/maven2</url>
@@ -46,7 +48,9 @@
           <id>jaspersoft-third-party</id>
           <url>https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/</url>
         </repository>
+        
 	</repositories>
+	
 	<!-- dependencias -->
 	<dependencies>
 		<!-- junit -->
@@ -120,7 +124,8 @@
 			<artifactId>gson</artifactId>
 			<version>2.4</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+		
+		<!-- JasperReports -->
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>

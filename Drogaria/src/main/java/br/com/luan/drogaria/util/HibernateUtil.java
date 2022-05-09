@@ -21,18 +21,17 @@ public class HibernateUtil {
 		return fabricaDeSessoes;
 	}
 	
-	public static Connection getConexao() {
+	public static Connection getConexao(){
 		Session sessao = fabricaDeSessoes.openSession();
 		
-		 Connection conexao = sessao.doReturningWork(new ReturningWork<Connection>() {
+		Connection conexao = sessao.doReturningWork(new ReturningWork<Connection>() {
 			@Override
 			public Connection execute(Connection conn) throws SQLException {
-				// TODO Auto-generated method stub
 				return conn;
 			}
 		});
-		 
-		 return conexao;
+		
+		return conexao;
 	}
 
 	static SessionFactory criarFabricaDeSessoes() {
