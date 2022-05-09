@@ -18,7 +18,7 @@
 		<property name="connection.pool_size">3</property>
 
 		<!-- SQL dialect -->
-		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+		<property name="dialect">org.hibernate.dialect.MySQL55Dialect</property>
 
 		<!-- Gerenciamento do Contexto das Sessões -->
 		<property name="current_session_context_class">thread</property>
@@ -27,7 +27,7 @@
 		<property name="show_sql">true</property>
 
 		<!-- Cria as tabelas do banco de dados -->
-		<property name="hbm2ddl.auto">validate</property>
+		<property name="hbm2ddl.auto">update</property>
 
 		<!-- Mapeamento das entidades -->
 		<mapping class="br.com.luan.drogaria.domain.Estado" />
