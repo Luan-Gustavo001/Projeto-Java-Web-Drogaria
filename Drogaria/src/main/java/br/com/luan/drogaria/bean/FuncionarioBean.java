@@ -1,19 +1,29 @@
 package br.com.luan.drogaria.bean;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import org.primefaces.component.datatable.DataTable;
 
 import br.com.luan.drogaria.dao.FuncionarioDAO;
 import br.com.luan.drogaria.dao.PessoaDAO;
 import br.com.luan.drogaria.domain.Funcionario;
 import br.com.luan.drogaria.domain.Pessoa;
+import br.com.luan.drogaria.util.HibernateUtil;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
@@ -116,5 +126,30 @@ public class FuncionarioBean implements Serializable{
 			erro.printStackTrace();
 		}
 
+	}
+	public void imprimir() {
+		try {
+			DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("formListagem:tabela");
+			Map<String, Object> filtros = tabela.getFilters();
+			String PNome = (String) filtros.get("pessoa.nome");
+
+			String caminho = Faces.getRealPath("/reports/funcionarios.jasper");
+
+			Map<String, Object> parametros = new HashMap<>();
+			if (PNome == null) {
+				parametros.put("FUNCIONARIO_NOME", "%%");
+			} else {
+				parametros.put("FUNCIONARIO_NOME", "%" + PNome + "%");
+			}
+
+			Connection conexao = HibernateUtil.getConexao();
+
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
+
+			JasperPrintManager.printReport(relatorio, true);
+		} catch (JRException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatório");
+			erro.printStackTrace();
+		}
 	}
 }

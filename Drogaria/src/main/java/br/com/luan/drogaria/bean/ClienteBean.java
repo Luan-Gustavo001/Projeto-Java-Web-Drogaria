@@ -1,19 +1,29 @@
 package br.com.luan.drogaria.bean;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import org.primefaces.component.datatable.DataTable;
 
 import br.com.luan.drogaria.dao.ClienteDAO;
 import br.com.luan.drogaria.dao.PessoaDAO;
 import br.com.luan.drogaria.domain.Cliente;
 import br.com.luan.drogaria.domain.Pessoa;
+import br.com.luan.drogaria.util.HibernateUtil;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -121,5 +131,37 @@ public class ClienteBean implements Serializable {
 			erro.printStackTrace();
 		}
 
+	}
+
+	public void imprimir() {
+		try {
+			DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("formListagem:tabela");
+			Map<String, Object> filtros = tabela.getFilters();
+			String pNome = (String) filtros.get("pessoa.nome");
+			String pCpf = (String) filtros.get("pessoa.cpf");
+			
+			String caminho = Faces.getRealPath("/reports/Clientes.jasper");
+
+			Map<String, Object> parametros = new HashMap<>();
+			if (pNome == null) {
+				parametros.put("PESSOA_NOME", "%%");
+			}else {
+				parametros.put("PESSOA_NOME", "%" +  pNome + "%");
+			}
+			if (pCpf == null) {
+				parametros.put("PESSOA_CPF", "%%");
+			}else {
+				parametros.put("PESSOA_CPF", "%" + pCpf + "%");
+			}
+						
+			Connection conexao = HibernateUtil.getConexao();
+
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
+			
+			JasperPrintManager.printReport(relatorio, true);
+		} catch (JRException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatório");
+			erro.printStackTrace();
+		}
 	}
 }

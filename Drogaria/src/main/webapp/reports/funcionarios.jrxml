@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="funcionarios" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9bbacad9-7c9c-4e94-bf43-8e8544356f72">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DrograriaAdapter"/>
+	<parameter name="FUNCIONARIO_NOME" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%%"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT drogaria.funcionario.carteiratrabalho,
+	drogaria.funcionario.`dataCadastro`,
+	drogaria.pessoa.nome,
+	drogaria.pessoa.cpf
+FROM drogaria.funcionario
+	INNER JOIN drogaria.pessoa ON 
+	 drogaria.funcionario.pessoa_codigo = drogaria.pessoa.codigo 
+WHERE 
+	 drogaria.pessoa.nome LIKE $P{FUNCIONARIO_NOME} 
+ORDER BY drogaria.pessoa.nome ASC]]>
+	</queryString>
+	<field name="carteiratrabalho" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="carteiratrabalho"/>
+		<property name="com.jaspersoft.studio.field.label" value="carteiratrabalho"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="funcionario"/>
+	</field>
+	<field name="dataCadastro" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="dataCadastro"/>
+		<property name="com.jaspersoft.studio.field.label" value="dataCadastro"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="funcionario"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pessoa"/>
+	</field>
+	<field name="cpf" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cpf"/>
+		<property name="com.jaspersoft.studio.field.label" value="cpf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pessoa"/>
+	</field>
+	<title>
+		<band height="80" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="0" width="555" height="80" uuid="628d48fc-bc9f-4b60-bd36-b6afe0ae78c9">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA["C:/Users/lfreitas/Pictures/Saved Pictures/b01.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="30" uuid="0aff98de-f31f-40b5-8312-a73dc5ed7a5f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Funcionários]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="150" height="30" uuid="fe32e766-3d24-4e5a-a970-f700a2271d90">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f80b51e9-2ebf-4c0e-94ce-8d62675c718b"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero da Carteira]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="0" width="110" height="30" uuid="cd5d5a93-e090-4823-a818-926a30c61fe5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="34beea9c-02a7-4317-ab25-32000b965b69"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de Cadastro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="145" height="30" uuid="60e52931-4e25-480e-9e60-0fb89f6bb158">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c3973395-7722-4026-b697-8926be018656"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="30" uuid="0534d00d-43d4-4f9e-8a30-771aff961ec0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="01fc56db-bd93-4ab0-8076-e3d3cad06373"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CPF]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="150" height="30" uuid="4f0667e5-5fad-4e48-b606-b9c5c2012c4c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f80b51e9-2ebf-4c0e-94ce-8d62675c718b"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{carteiratrabalho}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="110" height="30" uuid="b997cf33-de6f-4a8b-9281-c6e9a63ddc14">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="34beea9c-02a7-4317-ab25-32000b965b69"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{dataCadastro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="0" width="145" height="30" uuid="649b096d-4021-4b31-8e2c-1976b5d65b7e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c3973395-7722-4026-b697-8926be018656"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="30" uuid="68097f73-1542-408f-9b8f-a42290a4bd68">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="01fc56db-bd93-4ab0-8076-e3d3cad06373"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="30" uuid="3d836a72-3d99-4998-8395-6489c6fb6cef">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rua. Antonio Batista Ferreira, 301, Jardim Brasilia, Santa Cruz do Rio Pardo]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

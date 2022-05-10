@@ -20,9 +20,14 @@
 						<f:actionListener
 							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
+					<p:commandButton icon="ui-icon-print"
+							actionListener="#{pessoaBean.imprimir}">
+
+						</p:commandButton>
 				</f:facet>
 
-				<p:column headerText="Nome">
+				<p:column headerText="Nome" filterBy="#{pessoa.nome}"
+						sortBy="#{pessoa.nome}">
 					<h:outputText value="#{pessoa.nome}" />
 				</p:column>
 
@@ -30,7 +35,8 @@
 					<h:outputText value="#{pessoa.rg}" />
 				</p:column>
 
-				<p:column headerText="CPF">
+				<p:column headerText="CPF" filterBy="#{pessoa.cpf}"
+						sortBy="#{pessoa.cpf}">
 					<h:outputText value="#{pessoa.cpf}" />
 				</p:column>
 

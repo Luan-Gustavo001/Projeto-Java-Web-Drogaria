@@ -11,7 +11,7 @@
 	
 	<h:form id="formListagem">
 		<p:panel header="Funcionario - Listagem">
-			<p:dataTable id="tabela" emptyMessage="Nenhum Registro Encontrado."
+			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 				paginator="true" value="#{funcionarioBean.funcionarios}" var="funcionario" rows="5">
 				<f:facet name="header">
 					<p:commandButton value="Novo" actionListener="#{funcionarioBean.novo}"
@@ -20,22 +20,23 @@
 						<f:actionListener
 							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
+					<p:commandButton icon="ui-icon-print"
+							actionListener="#{funcionarioBean.imprimir}">
+							</p:commandButton>
 				</f:facet>
 
-				<p:column headerText="Carteira de Trabalho" filterBy=""
+				<p:column headerText="Carteira de Trabalho"
 					sortBy="">
 					<h:outputText value="#{funcionario.carteiratrabalho}" />
 				</p:column>
 
-				<p:column headerText="Data de Adimissão" filterBy="#{funcionario.dataCadastro}"
-					sortBy="#{funcionario.dataCadastro}">
-					<h:outputText value="#{funcionario.dataCadastro}">
+				<p:column headerText="Data de Adimissão" >
+									<h:outputText value="#{funcionario.dataCadastro}">
 					<f:convertDateTime locale="pt_BR" />
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Nome" filterBy="{#{funcionario.pessoa.nome}}"
-					sortBy="{#{funcionario.pessoa.nome}}">
+				<p:column headerText="Nome" filterBy="#{funcionario.pessoa.nome}" sortBy="#{funcionario.pessoa.nome}">
 					<h:outputText value="#{funcionario.pessoa.nome}" />
 				</p:column>
 				
@@ -95,7 +96,7 @@
 			</h:panelGrid>
 			<h:panelGrid columns="2">
 				<p:commandButton value="Salvar"
-					actionListener="#{fabricanteBean}"
+					actionListener="#{funcionarioBean.salvar()}"
 					update=":mensagem :formCadastro:painel :formListagem:tabela" />
 					
 				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />

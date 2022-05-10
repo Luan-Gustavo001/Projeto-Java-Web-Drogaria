@@ -1,15 +1,20 @@
 package br.com.luan.drogaria.bean;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import org.primefaces.component.datatable.DataTable;
 
 import br.com.luan.drogaria.dao.CidadeDAO;
 import br.com.luan.drogaria.dao.EstadoDAO;
@@ -17,6 +22,11 @@ import br.com.luan.drogaria.dao.PessoaDAO;
 import br.com.luan.drogaria.domain.Cidade;
 import br.com.luan.drogaria.domain.Estado;
 import br.com.luan.drogaria.domain.Pessoa;
+import br.com.luan.drogaria.util.HibernateUtil;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -143,7 +153,7 @@ public class PessoaBean implements Serializable {
 
 			EstadoDAO estadoDAO = new EstadoDAO();
 			estados = estadoDAO.listar();
-			
+
 			estado = pessoa.getCidade().getEstado();
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao selecionar uma pessoa");
@@ -162,6 +172,38 @@ public class PessoaBean implements Serializable {
 			}
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao filtrar as cidades");
+			erro.printStackTrace();
+		}
+	}
+
+	public void imprimir() {
+		try {
+			DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("formListagem:tabela");
+			Map<String, Object> filtros = tabela.getFilters();
+			String Nome = (String) filtros.get("nome");
+			String Cpf = (String) filtros.get("cpf");
+
+			String caminho = Faces.getRealPath("/reports/pessoas.jasper");
+
+			Map<String, Object> parametros = new HashMap<>();
+			if (Nome == null) {
+				parametros.put("NOME", "%%");
+			} else {
+				parametros.put("NOME", "%" + Nome + "%");
+			}
+			if (Cpf == null) {
+				parametros.put("CPF", "%%");
+			} else {
+				parametros.put("CPF", "%" + Cpf + "%");
+			}
+
+			Connection conexao = HibernateUtil.getConexao();
+
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
+
+			JasperPrintManager.printReport(relatorio, true);
+		} catch (JRException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatório");
 			erro.printStackTrace();
 		}
 	}
