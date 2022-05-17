@@ -68,15 +68,16 @@ public class FabricanteService {
 		return jsonSaida;
 	}
 	
+	// http://192.168.0.114:8080/Drogaria/rest/fabricante
 	@DELETE
-	public String excluir(String json) {
-		Gson gson = new Gson();
-		Fabricante fabricante = gson.fromJson(json, Fabricante.class);
-		
+	@Path("{codigo}")
+	public String excluir(@PathParam("codigo") Long codigo) {
 		FabricanteDAO fabricanteDAO = new FabricanteDAO();
-		fabricante = fabricanteDAO.buscar(fabricante.getCodigo());
+		
+		Fabricante fabricante = fabricanteDAO.buscar(codigo);
 		fabricanteDAO.excluir(fabricante);
 		
+		Gson gson = new Gson();
 		String Saida = gson.toJson(fabricante);
 		return Saida;
 		

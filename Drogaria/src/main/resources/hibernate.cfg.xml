@@ -40,6 +40,9 @@
 		<mapping class="br.com.luan.drogaria.domain.Usuario" />
 		<mapping class="br.com.luan.drogaria.domain.Venda" />
 		<mapping class="br.com.luan.drogaria.domain.ItemVenda" />
+		<mapping class="br.com.luan.drogaria.domain.HistoricoVenda" />
+		<mapping class="br.com.luan.drogaria.domain.Caixa" />
+		<mapping class="br.com.luan.drogaria.domain.Movimentacao" />
 	</session-factory>
 
 </hibernate-configuration>

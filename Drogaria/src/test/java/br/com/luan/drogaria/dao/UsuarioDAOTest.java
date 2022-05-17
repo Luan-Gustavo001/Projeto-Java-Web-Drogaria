@@ -2,6 +2,7 @@ package br.com.luan.drogaria.dao;
 
 import java.util.List;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -23,7 +24,10 @@ public class UsuarioDAOTest {
 		Usuario usuario = new Usuario();
 		usuario.setAtivo(true);
 		usuario.setPessoa(pessoa);
-		usuario.setSenha("q1w2e3r4");
+		usuario.setSenhaSemCriptografia("q1w2e3r4");
+		
+		SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());
+		usuario.setSenha(hash.toHex());
 		usuario.setTipo('A');
 
 		UsuarioDAO usuarioDAO = new UsuarioDAO();

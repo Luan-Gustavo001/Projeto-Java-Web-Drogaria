@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="historico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="82ca4c9b-7ccc-4b51-8719-0688ebae6654">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DrograriaAdapter"/>
+	<parameter name="VENDA_FUNCIONARIO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="VENDA_CLIENTE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%%"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT drogaria.venda.cliente_codigo,
+	drogaria.venda.funcionario_codigo,
+	drogaria.venda.`precoTotal`,
+	drogaria.venda.horario,
+	drogaria.historicovenda.venda_codigo,
+	drogaria.pessoa.nome,
+	drogaria.funcionario.pessoa_codigo,
+	drogaria.cliente.pessoa_codigo
+FROM drogaria.historicovenda
+	INNER JOIN drogaria.venda ON 
+	 drogaria.historicovenda.venda_codigo = drogaria.venda.codigo 
+	INNER JOIN drogaria.funcionario ON 
+	 drogaria.venda.funcionario_codigo = drogaria.funcionario.codigo 
+	INNER JOIN drogaria.cliente ON 
+	 drogaria.venda.cliente_codigo = drogaria.cliente.codigo 
+	INNER JOIN drogaria.pessoa ON 
+	 drogaria.funcionario.pessoa_codigo = drogaria.pessoa.codigo 
+	 AND drogaria.cliente.pessoa_codigo = drogaria.pessoa.codigo 
+WHERE 
+	 drogaria.pessoa.nome LIKE $P{VENDA_CLIENTE} 
+	 AND drogaria.pessoa.nome LIKE $P{VENDA_FUNCIONARIO} 
+ORDER BY drogaria.pessoa.nome ASC]]>
+	</queryString>
+	<field name="cliente_codigo" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="cliente_codigo"/>
+		<property name="com.jaspersoft.studio.field.label" value="cliente_codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venda"/>
+	</field>
+	<field name="funcionario_codigo" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="funcionario_codigo"/>
+		<property name="com.jaspersoft.studio.field.label" value="funcionario_codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venda"/>
+	</field>
+	<field name="precoTotal" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="precoTotal"/>
+		<property name="com.jaspersoft.studio.field.label" value="precoTotal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venda"/>
+	</field>
+	<field name="horario" class="java.time.LocalDateTime">
+		<property name="com.jaspersoft.studio.field.name" value="horario"/>
+		<property name="com.jaspersoft.studio.field.label" value="horario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="venda"/>
+	</field>
+	<field name="venda_codigo" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="venda_codigo"/>
+		<property name="com.jaspersoft.studio.field.label" value="venda_codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="historicovenda"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.tree.path" value="pessoa"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+	</field>
+	<title>
+		<band height="81" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="1" width="555" height="80" uuid="7e20ec01-a92e-4f42-95ca-3f8aef2819d5">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA["C:/Users/lfreitas/Pictures/Saved Pictures/b01.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="30" uuid="0e4051ab-988a-405e-b998-d969c3fcf3c4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Relatório do Histórico de Venda]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="c47b0ace-caf2-4aed-8128-2a77299e445a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1da3e2cc-e031-4047-9fb7-fa393ce9a4d3"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo da Venda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="0" width="100" height="30" uuid="3b18df56-deec-46b4-8934-c7cb3233b016">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8d29c7f9-eb9c-466b-bf55-d39637ac624f"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data da Venda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="0" width="100" height="30" uuid="df3ac3d8-37e2-4268-8993-021ce8e4cd07">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="24202650-3fc5-481b-8806-04aac69bb147"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Preço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="0" width="100" height="30" uuid="4d498e4b-8dd9-4716-bd69-cb2b337250b8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="16ab3469-cbdc-43ea-8124-b333e5186a1d"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="30" uuid="b3f58852-dc61-401c-88a7-0464d3a5af2d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7b18da8a-c3c1-48ba-a274-259a8aae2f0d"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Funcionário]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="41" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30" uuid="3a388d50-693b-4308-80c1-0500e71a2858">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1da3e2cc-e031-4047-9fb7-fa393ce9a4d3"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{venda_codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="0" width="100" height="30" uuid="2fa7c1ab-fed9-4507-b1a3-860ed53c88fb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8d29c7f9-eb9c-466b-bf55-d39637ac624f"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{horario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="0" width="100" height="30" uuid="2257e21d-45c1-4790-b62d-943c0669e7cd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="24202650-3fc5-481b-8806-04aac69bb147"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{precoTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="0" width="100" height="30" uuid="34b05fe8-dafe-4cc8-b7b0-dfc85d11fe2a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="16ab3469-cbdc-43ea-8124-b333e5186a1d"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="30" uuid="15a32a56-f1e4-4d91-8f0c-20f10585d38f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7b18da8a-c3c1-48ba-a274-259a8aae2f0d"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="30" uuid="61eb4bdc-c815-4f13-a449-5bec79a905f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Rua. Antonio Batista Ferreira, 301, Jardim Brasilia, Santa Cruz do Rio Pardo]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

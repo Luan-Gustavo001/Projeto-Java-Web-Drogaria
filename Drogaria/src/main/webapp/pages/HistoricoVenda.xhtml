@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<ui:define name="conteudo">
+
+		<h:form id="formListagem">
+			<p:panel header="Histórico - Listagem">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{historicoVendaBean.vendas}"
+					var="historico" rows="5">
+<!-- 					<f:facet name="header"> -->
+					
+<!-- 						<p:commandButton icon="ui-icon-print" -->
+<!-- 							actionListener="#{historicoVendaBean.imprimir}"> -->
+<!-- 						</p:commandButton> -->
+<!-- 					</f:facet> -->
+
+					<p:column headerText="Codigo da Venda" sortBy="">
+						<h:outputText value="#{historico.codigo}" />
+					</p:column>
+
+					<p:column headerText="Data da Compra">
+						<h:outputText value="#{historico.horario}">
+							<f:convertDateTime locale="pt_BR" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Cliente" filterBy="#{historico.cliente.pessoa.nome}"
+						sortBy="#{historico.cliente.pessoa.nome}">
+						<h:outputText value="#{historico.cliente.pessoa.nome}" converter="omnifaces.SelectItemsConverter"/>
+					</p:column>
+
+					<p:column headerText="Preço">
+						<h:outputText value="#{historico.precoTotal}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Funcionario"
+						filterBy="#{historico.funcionario.pessoa.nome}"
+						sortBy="#{historico.funcionario.pessoa.nome}">
+						<h:outputText value="#{historico.funcionario.pessoa.nome}" />
+					</p:column>
+
+				</p:dataTable>
+			</p:panel>
+		</h:form>		
+	</ui:define>
+</ui:composition>
