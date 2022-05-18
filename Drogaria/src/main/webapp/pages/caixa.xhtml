@@ -38,7 +38,7 @@ xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 					
 				</p:selectOneMenu>
 			</h:panelGrid>	
-			<h:panelGrid>
+			<h:panelGrid columns="1">
 				<p:commandButton value="Salvar" oncomplete="PF('dialogo').hide();"
 				actionListener="#{caixaBean.salvar()}" update=":mensagem"/>
 			</h:panelGrid>	

@@ -30,7 +30,8 @@
 						<p:menuitem value="sair" />
 					</p:submenu>
 
-					<p:submenu label="Cadastro">
+					<p:submenu label="Cadastro" 
+					rendered="#{autenticacaoBean.temPermissoes('A', 'G')}">
 						<p:menuitem value="Estado" url="/pages/estados.xhtml" />
 						<p:menuitem value="Cidade" url="/pages/cidade.xhtml" />
 						<p:menuitem value="Fabricante" url="/pages/fabricante.xhtml" />
@@ -43,7 +44,7 @@
 					<p:submenu label="Loja">
 						<p:menuitem value="Venda" url="/pages/vendas.xhtml" />
 					</p:submenu>
-
+					
 					<p:submenu label="Ajuda">
 						<p:menuitem value="sobre" />
 					</p:submenu>

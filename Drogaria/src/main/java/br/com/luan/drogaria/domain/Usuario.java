@@ -28,7 +28,7 @@ public class Usuario extends GenericDomain {
 	public String getSenhaSemCriptografia() {
 		return senhaSemCriptografia;
 	}
-
+	
 	public void setSenhaSemCriptografia(String senhaSemCriptografia) {
 		this.senhaSemCriptografia = senhaSemCriptografia;
 	}

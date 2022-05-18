@@ -1,6 +1,8 @@
 package br.com.luan.drogaria.bean;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -44,7 +46,7 @@ public class AutenticacaoBean {
 	
 	public void autenticar() {
 		try {
-			UsuarioDAO usuarioDAO= new UsuarioDAO();
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			usuarioLogado = usuarioDAO.autenticar(usuario.getPessoa().getCpf(), usuario.getSenha());
 			
 			if (usuarioLogado == null) {
@@ -57,6 +59,15 @@ public class AutenticacaoBean {
 		erro.printStackTrace();
 		Messages.addFlashGlobalError(erro.getMessage());
 	   }
+	}
+	
+	public boolean temPermissoes(List<String> permissoes) {
+		for(String permissao : permissoes) {
+			if (usuarioLogado.getTipo() == permissao.charAt(0)) {
+				return true;
+			}
+		}
+				return false;
 	}
 }
 

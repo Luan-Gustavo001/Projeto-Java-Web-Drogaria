@@ -9,6 +9,7 @@ import br.com.luan.drogaria.domain.Usuario;
 import br.com.luan.drogaria.util.HibernateUtil;
 
 public class UsuarioDAO extends GenericDAO<Usuario>{
+	
 	public Usuario autenticar(String cpf,String senha) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		
@@ -17,9 +18,8 @@ public class UsuarioDAO extends GenericDAO<Usuario>{
 			consulta.createAlias("pessoa", "p");
 			
 			consulta.add(Restrictions.eq("p.cpf", cpf));
-			consulta.add(Restrictions.eq("senha", senha));
 			
-			SimpleHash hash = new SimpleHash("mds", senha);
+			SimpleHash hash = new SimpleHash("md5", senha);
 			consulta.add(Restrictions.eq("senha", hash.toHex()));
 			
 			Usuario resultado = (Usuario) consulta.uniqueResult();

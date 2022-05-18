@@ -15,7 +15,7 @@ public class UsuarioDAOTest {
 	@Test
 	public void salvar() {
 		PessoaDAO pessoaDAO = new PessoaDAO();
-		Pessoa pessoa = pessoaDAO.buscar(3L);
+		Pessoa pessoa = pessoaDAO.buscar(2L);
 
 		System.out.println("Pessoa encontrada :");
 		System.out.println("Nome :" + pessoa.getNome());
@@ -24,18 +24,31 @@ public class UsuarioDAOTest {
 		Usuario usuario = new Usuario();
 		usuario.setAtivo(true);
 		usuario.setPessoa(pessoa);
-		usuario.setSenhaSemCriptografia("q1w2e3r4");
+		usuario.setSenhaSemCriptografia("464842");
 		
 		SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());
 		usuario.setSenha(hash.toHex());
-		usuario.setTipo('A');
+		usuario.setTipo('R');
 
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		usuarioDAO.salvar(usuario);
 
 		System.out.println("O Usuario " + usuario.getPessoa().getNome() + " Foi adicionado ao Banco");
 	}
-
+	
+	// -------------- AUTENTICAR ----------------------
+	@Ignore
+	@Test
+	public void autenticar() {
+		String cpf = "222.222.222-22";
+		String senha = "464842";
+		
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		Usuario usuario = usuarioDAO.autenticar(cpf, senha);
+		
+		System.out.println("Ususario Autenticado:" + usuario.getPessoa().getNome());
+	}
+	
 	// -------------- LISTAR ----------------------
 	@Ignore
 	@Test
