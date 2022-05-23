@@ -1,7 +1,6 @@
 package br.com.luan.drogaria.bean;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -29,11 +28,10 @@ public class AutenticacaoBean {
 		this.usuario = usuario;
 	}
 	
-	
 	public Usuario getUsuarioLogado() {
 		return usuarioLogado;
 	}
-
+	
 	public void setUsuarioLogado(Usuario usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
 	}
@@ -43,17 +41,18 @@ public class AutenticacaoBean {
 		usuario = new Usuario();
 		usuario.setPessoa(new Pessoa());
 	}
-	
+
 	public void autenticar() {
 		try {
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			usuarioLogado = usuarioDAO.autenticar(usuario.getPessoa().getCpf(), usuario.getSenha());
 			
-			if (usuarioLogado == null) {
-			Messages.addFlashGlobalError("CPF e /ou Senha incorretos");
-			return;
+			if(usuarioLogado == null){
+				Messages.addGlobalError("CPF e/ou senha incorretos");
+				return;
 			}
 			
+<<<<<<< Updated upstream
 		Faces.redirect("./pages/Index.xhtml");
 	}catch(IOException erro){
 		erro.printStackTrace();
@@ -71,3 +70,22 @@ public class AutenticacaoBean {
 //	}
 }
 
+=======
+			Faces.redirect("./pages/Index.xhtml");
+		} catch (IOException erro) {
+			erro.printStackTrace();
+			Messages.addGlobalError(erro.getMessage());
+		}
+	}
+	
+//	public boolean temPermissoes(List<String> permissoes){		
+//		for(String permissao : permissoes){
+//			if(usuarioLogado.getTipo() == permissao.charAt(0)){
+//				return true;
+//			}
+//		}
+//		
+//		return false;
+//	}
+}
+>>>>>>> Stashed changes

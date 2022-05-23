@@ -10,43 +10,37 @@ import br.com.luan.drogaria.bean.AutenticacaoBean;
 import br.com.luan.drogaria.domain.Usuario;
 
 @SuppressWarnings("serial")
-public class AutenticacaoListener implements PhaseListener{
+public class AutenticacaoListener implements PhaseListener {
 
 	@Override
 	public void afterPhase(PhaseEvent event) {
 		String paginaAtual = Faces.getViewId();
-		System.out.println("Página Atual: " + paginaAtual);
-		
+	
 		boolean ehPaginaDeAutenticacao = paginaAtual.contains("autenticacao.xhtml");
-		
-		if (!ehPaginaDeAutenticacao) { 
-		AutenticacaoBean autenticacaoBean = Faces.getSessionAttribute("autenticacaoBean");
-		
-			if (autenticacaoBean == null) {
+	
+		if(!ehPaginaDeAutenticacao){
+			AutenticacaoBean autenticacaoBean = Faces.getSessionAttribute("autenticacaoBean");
+
+			if(autenticacaoBean == null){
 				Faces.navigate("/pages/autenticacao.xhtml");
 				return;
 			}
 			
 			Usuario usuario = autenticacaoBean.getUsuarioLogado();
-			if (usuario == null) {
+			if(usuario == null){
 				Faces.navigate("/pages/autenticacao.xhtml");
 				return;
 			}
-			
-			
-		}
+		}		
 	}
 
 	@Override
 	public void beforePhase(PhaseEvent event) {
-		
 	}
 
 	@Override
 	public PhaseId getPhaseId() {
-		
 		return PhaseId.RESTORE_VIEW;
 	}
-	
 
 }

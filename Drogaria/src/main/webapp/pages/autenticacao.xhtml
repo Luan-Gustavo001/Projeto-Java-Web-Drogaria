@@ -8,9 +8,10 @@
 	template="/templates/modelo.xhtml">
 
 	<ui:define name="conteudo">
-	<h:form id="Autenticacao">
+	
 	<p:dialog header="Autenticação" closable="false" draggable="false"
 	resizable="false" modal="true" visible="true">
+	<h:form id="Autenticacao">
 		<h:panelGrid columns="2">
 			<p:outputLabel for="cpf" value="CPF: "/>
 			<p:inputMask id="cpf" mask="999.999.999-99" size="10" required="true"
@@ -28,9 +29,11 @@
 				<p:commandButton value="Entrar" update=":mensagem"
 				actionListener="#{autenticacaoBean.autenticar}"/>
 			</p:panelGrid>
+		
 		</h:panelGrid>
+		</h:form>
 	</p:dialog>
-	</h:form>
+	
 </ui:define>
 
 </ui:composition>
