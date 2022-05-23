@@ -13,7 +13,7 @@
 			<p:panel header="Cliente - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" value="#{clienteBean.clientes}" var="cliente"
-					rows="5">
+					rows="5" >
 					<f:facet name="header">
 						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 							actionListener="#{clienteBean.novo}"
@@ -44,10 +44,19 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Liberado" sortBy="#{cliente.liberado}">
-						<p:selectBooleanCheckbox value="#{cliente.liberado}"
-							disabled="true" />
-					</p:column>
+					<p:column headerText="Liberado" sortBy="#{cliente.liberado}"
+					filterBy="#{cliente.liberado}">
+					<f:facet name="filter">
+						<p:selectOneButton onchange="PF('tabela').filter()">
+							<f:selectItem itemLabel="Todos" itemValue="" />
+							<f:selectItem itemLabel="Sim" itemValue="true" />
+							<f:selectItem itemLabel="Não" itemValue="false" />
+						</p:selectOneButton>
+					</f:facet>
+					<p:selectBooleanCheckbox value="#{cliente.liberado}"
+						disabled="true" />
+				</p:column>
+				
 					<p:column headerText="Opções">
 						<p:commandButton icon="ui-icon-trash"
 							actionListener="#{clienteBean.excluir}"

@@ -1,6 +1,9 @@
 package br.com.luan.drogaria.bean;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,6 +23,8 @@ import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.luan.drogaria.dao.FabricanteDAO;
@@ -41,6 +46,8 @@ public class ProdutoBean implements Serializable {
 	private Produto  produto;
 	private List<Produto> produtos;
 	private List<Fabricante> fabricantes;
+	
+	private StreamedContent foto;
 	
 	public Produto getProduto() {
 		return produto;
@@ -64,6 +71,14 @@ public class ProdutoBean implements Serializable {
 
 	public void setFabricantes(List<Fabricante> fabricantes) {
 		this.fabricantes = fabricantes;
+	}
+	
+	public void setFoto(StreamedContent foto) {
+		this.foto = foto;
+	}
+	
+	public StreamedContent getFoto() {
+		return foto;
 	}
 
 	@PostConstruct
@@ -189,6 +204,18 @@ public class ProdutoBean implements Serializable {
 			JasperPrintManager.printReport(relatorio, true);
 		} catch (JRException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatório");
+			erro.printStackTrace();
+		}
+	}
+	
+	public void download(ActionEvent evento) {
+		try {
+			produto = (Produto) evento.getComponent().getAttributes().get("produtoSelecionado");
+			
+			InputStream stream = new FileInputStream("C:/eclipse/Uploads/" + produto.getCodigo() + ".png");
+			foto = new DefaultStreamedContent(stream, "image/png", produto.getCodigo() + ".png");
+		} catch (FileNotFoundException erro) {
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar efetuar o download da foto");
 			erro.printStackTrace();
 		}
 	}

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -26,22 +25,20 @@ import br.com.luan.drogaria.domain.Venda;
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class VendaBean implements Serializable{
-	
-	private List<Produto> produtos;
-	
-	private List<ItemVenda> itensVenda;
-	
-	private List<Cliente> clientes;
-	
-	private List<Funcionario> funcionarios;
-	
+public class VendaBean implements Serializable {
+
 	private Venda venda;
-	
+
+	private List<Produto> produtos;
+	private List<ItemVenda> itensVenda;
+	private List<Cliente> clientes;
+	private List<Funcionario> funcionarios;
+	private List<Venda> vendas;
+
 	public Venda getVenda() {
 		return venda;
 	}
-	
+
 	public void setVenda(Venda venda) {
 		this.venda = venda;
 	}
@@ -61,7 +58,7 @@ public class VendaBean implements Serializable{
 	public void setItensVenda(List<ItemVenda> itensVenda) {
 		this.itensVenda = itensVenda;
 	}
-	
+
 	public List<Cliente> getClientes() {
 		return clientes;
 	}
@@ -78,75 +75,87 @@ public class VendaBean implements Serializable{
 		this.funcionarios = funcionarios;
 	}
 
-	@PostConstruct
+	public void setVendas(List<Venda> vendas) {
+		this.vendas = vendas;
+	}
+
+	public List<Venda> getVendas() {
+		return vendas;
+	}
+	
 	public void novo() {
 		try {
 			venda = new Venda();
 			venda.setPrecoTotal(new BigDecimal("0.00"));
-			
+
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtos = produtoDAO.listar("descricao");
-			
+
 			itensVenda = new ArrayList<>();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar os produtos");
 			erro.printStackTrace();
 		}
 	}
-	
+
+	public void listar() {
+		VendaDAO vendaDAO = new VendaDAO();
+		vendas = vendaDAO.listar("horario");
+	}
+
 	public void adicionar(ActionEvent evento) {
 		Produto produto = (Produto) evento.getComponent().getAttributes().get("produtoSelecionado");
-		
+
 		int achou = -1;
-		for(int posicao = 0; posicao < itensVenda.size(); posicao++) {
-			if(itensVenda.get(posicao).getProduto().equals(produto)) {
+		for (int posicao = 0; posicao < itensVenda.size(); posicao++) {
+			if (itensVenda.get(posicao).getProduto().equals(produto)) {
 				achou = posicao;
 			}
 		}
-		
+
 		if (achou < 0) {
 			ItemVenda itemVenda = new ItemVenda();
-			itemVenda.setValorParcial(produto.getPreco());			
+			itemVenda.setValorParcial(produto.getPreco());
 			itemVenda.setProduto(produto);
 			itemVenda.setQuantidade(new Short("1"));
-			
+
 			itensVenda.add(itemVenda);
-		}else {
+		} else {
 			ItemVenda itemVenda = itensVenda.get(achou);
 			itemVenda.setQuantidade(new Short(itemVenda.getQuantidade() + 1 + ""));
 			itemVenda.setValorParcial((produto.getPreco().multiply(new BigDecimal(itemVenda.getQuantidade()))));
-	
+
 		}
-		
+
 		calcular();
 	}
-	
+
 	public void remover(ActionEvent evento) {
 		ItemVenda itemVenda = (ItemVenda) evento.getComponent().getAttributes().get("itemSelecionado");
-		
+
 		int achou = -1;
-		for(int posicao = 0; posicao < itensVenda.size(); posicao++){
-			if(itensVenda.get(posicao).getProduto().equals(itemVenda.getProduto())){
+		for (int posicao = 0; posicao < itensVenda.size(); posicao++) {
+			if (itensVenda.get(posicao).getProduto().equals(itemVenda.getProduto())) {
 				achou = posicao;
 			}
 		}
-		
-		if(achou > -1){
+
+		if (achou > -1) {
 			itensVenda.remove(achou);
 		}
-		
+
 		calcular();
 	}
-	
-	public void calcular(){
+
+	public void calcular() {
 		venda.setPrecoTotal(new BigDecimal("0.00"));
-		
-		for(int posicao = 0; posicao < itensVenda.size(); posicao++){
+
+		for (int posicao = 0; posicao < itensVenda.size(); posicao++) {
 			ItemVenda itemVenda = itensVenda.get(posicao);
 			venda.setPrecoTotal(venda.getPrecoTotal().add(itemVenda.getValorParcial()));
 		}
-	} 
-	
+	}
+
 	public void finalizar() {
 		try {
 			venda.setHorario(new Date());
@@ -154,7 +163,7 @@ public class VendaBean implements Serializable{
 			venda.setFuncionario(null);
 			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 			funcionarios = funcionarioDAO.listarOrdenado("");
-			
+
 			ClienteDAO clienteDAO = new ClienteDAO();
 			clientes = clienteDAO.listarOrdenado("");
 		} catch (RuntimeException erro) {
@@ -162,21 +171,21 @@ public class VendaBean implements Serializable{
 			erro.printStackTrace();
 		}
 	}
-	
+
 	public void salvar() {
 		try {
 			if (venda.getPrecoTotal().signum() == 0) {
 				Messages.addFlashGlobalError("Informe no minimo um item para prosseguir com a venda");
-				return;	
+				return;
 			}
-			
+
 			VendaDAO vendaDAO = new VendaDAO();
 			vendaDAO.salvar(venda, itensVenda);
-			
+
 			novo();
-			
+
 			Messages.addFlashGlobalInfo("Venda realizada com sucesso");
-			
+
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar salvar uma venda");
 			erro.printStackTrace();

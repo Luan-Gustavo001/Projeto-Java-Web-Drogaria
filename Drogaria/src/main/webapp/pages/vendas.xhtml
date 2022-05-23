@@ -7,6 +7,10 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	template="/templates/modelo.xhtml">
 
+<f:metadata>
+	<f:viewAction action="#{vendaBean.novo}" />
+</f:metadata>
+
 	<ui:define name="conteudo">
 
 	<h:form id="formulario">
@@ -14,7 +18,9 @@
 			<p:dataTable id="tabelaproduto"
 				emptyMessage="Nenhum registro encontrado." paginator="true"
 				value="#{vendaBean.produtos}" var="produto" rows="5"
-				paginatorPosition="bottom">>
+				paginatorPosition="bottom"
+				editable="true"
+				editMode="cell">
 
 				<p:column headerText="Descrição" sortBy="#{produto.descricao}"
 					filterBy="#{produto.descricao}">
@@ -65,7 +71,15 @@
 				</p:column>
 
 				<p:column headerText="Quantidade Comprada">
-					<h:outputText value="#{itemVenda.quantidade}" />
+				<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{itemVenda.quantidade}" />
+							</f:facet>
+							<f:facet name="input">
+								<h:inputText value="#{itemVenda.quantidade}" />								
+							</f:facet>
+					</p:cellEditor>
+					
 				</p:column>
 
 				<p:column headerText="Preço Parcial">
