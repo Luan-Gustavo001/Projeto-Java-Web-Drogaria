@@ -92,8 +92,7 @@ public class ProdutoBean implements Serializable {
 	public void editar(ActionEvent evento){
 		try {
 			produto = (Produto) evento.getComponent().getAttributes().get("produtoSelecionado");
-			produto.setCaminho("C:/eclipse/Uploads/" + produto.getCodigo()+ 
-					" " + produto.getDescricao() + ".png");
+			produto.setCaminho("C:/eclipse/Uploads/" + produto.getCodigo() + ".png");
 			FabricanteDAO fabricanteDAO = new FabricanteDAO();
 			fabricantes = fabricanteDAO.listar();
 		} catch (RuntimeException erro) {
@@ -113,7 +112,7 @@ public class ProdutoBean implements Serializable {
 			Produto produtoRetorno = produtoDAO.merge(produto);
 			
 			Path origem = Paths.get(produto.getCaminho());
-			Path destino = Paths.get("C:/eclipse/Uploads/" + produtoRetorno.getCodigo()+ " " + produtoRetorno.getDescricao() + ".png");
+			Path destino = Paths.get("C:/eclipse/Uploads/" + produtoRetorno.getCodigo() + ".png");
 
 			Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
 			
@@ -138,8 +137,7 @@ public class ProdutoBean implements Serializable {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtoDAO.excluir(produto);
 			
-			Path arquivo = Paths.get("C:/eclipse/Uploads/" + produto.getCodigo()+ 
-			" " + produto.getDescricao() + ".png");
+			Path arquivo = Paths.get("C:/eclipse/Uploads/" + produto.getCodigo() + ".png");
 			Files.deleteIfExists(arquivo);
 
 			produtos = produtoDAO.listar();

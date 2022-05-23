@@ -2,6 +2,7 @@ package br.com.luan.drogaria.dao;
 
 import java.util.Date;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.luan.drogaria.domain.Funcionario;
@@ -9,6 +10,7 @@ import br.com.luan.drogaria.domain.Pessoa;
 
 public class FuncionarioDAOTest{ 
 	@Test
+	@Ignore
 	public void salvar(){
 		
 		PessoaDAO pessoaDAO = new PessoaDAO();

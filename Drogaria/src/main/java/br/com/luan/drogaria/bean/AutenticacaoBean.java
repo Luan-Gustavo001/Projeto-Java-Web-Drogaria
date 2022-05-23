@@ -52,7 +52,6 @@ public class AutenticacaoBean {
 				return;
 			}
 			
-<<<<<<< Updated upstream
 		Faces.redirect("./pages/Index.xhtml");
 	}catch(IOException erro){
 		erro.printStackTrace();
@@ -69,23 +68,3 @@ public class AutenticacaoBean {
 //				return false;
 //	}
 }
-
-=======
-			Faces.redirect("./pages/Index.xhtml");
-		} catch (IOException erro) {
-			erro.printStackTrace();
-			Messages.addGlobalError(erro.getMessage());
-		}
-	}
-	
-//	public boolean temPermissoes(List<String> permissoes){		
-//		for(String permissao : permissoes){
-//			if(usuarioLogado.getTipo() == permissao.charAt(0)){
-//				return true;
-//			}
-//		}
-//		
-//		return false;
-//	}
-}
->>>>>>> Stashed changes
