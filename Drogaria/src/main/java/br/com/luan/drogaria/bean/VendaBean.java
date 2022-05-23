@@ -129,6 +129,13 @@ public class VendaBean implements Serializable {
 
 		calcular();
 	}
+	
+	public void atualizarPrecoParcial() {
+		for(ItemVenda itemVenda : this.itensVenda) {
+			itemVenda.setValorParcial(itemVenda.getProduto().getPreco().multiply(new BigDecimal(itemVenda.getQuantidade())));
+		}
+		this.calcular();
+	}
 
 	public void remover(ActionEvent evento) {
 		ItemVenda itemVenda = (ItemVenda) evento.getComponent().getAttributes().get("itemSelecionado");

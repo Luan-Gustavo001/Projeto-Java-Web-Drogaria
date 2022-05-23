@@ -18,9 +18,7 @@
 			<p:dataTable id="tabelaproduto"
 				emptyMessage="Nenhum registro encontrado." paginator="true"
 				value="#{vendaBean.produtos}" var="produto" rows="5"
-				paginatorPosition="bottom"
-				editable="true"
-				editMode="cell">
+				paginatorPosition="bottom">
 
 				<p:column headerText="Descrição" sortBy="#{produto.descricao}"
 					filterBy="#{produto.descricao}">
@@ -53,12 +51,18 @@
 
 			</p:dataTable>
 		</p:panel>
+		
+		<p:remoteCommand name="rc" actionListener="#{vendaBean.atualizarPrecoParcial}" update=":formulario:tabelacompra :formulario:painelFinalizacao"/>
 
 		<p:panel header="Cesta de Compras">
 			<p:dataTable id="tabelacompra"
 				emptyMessage="Nenhum produto no carrinho." paginator="true"
 				value="#{vendaBean.itensVenda}" var="itemVenda" rows="5"
-				paginatorPosition="bottom">
+				paginatorPosition="bottom"
+				editable="true"
+				editMode="cell">
+
+				<p:ajax event="cellEdit" oncomplete="rc()"/>
 
 				<p:column headerText="Descrição">
 					<h:outputText value="#{itemVenda.produto.descricao}" />

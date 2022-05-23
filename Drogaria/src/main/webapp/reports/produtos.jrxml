@@ -9,6 +9,7 @@
 	<parameter name="PRODUTO_DESCRICAO" class="java.lang.String">
 		<defaultValueExpression><![CDATA["%%"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="CAMINHO_BANNER" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT drogaria.produto.descricao AS pdescricao,
 	drogaria.produto.preco,
@@ -49,7 +50,7 @@ ORDER BY drogaria.produto.descricao ASC,
 				<reportElement x="0" y="0" width="555" height="80" uuid="67e274e0-bb15-4b9b-b8a6-7de90f72a0f6">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA["C:/Users/lfreitas/Pictures/Saved Pictures/b01.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{CAMINHO_BANNER}]]></imageExpression>
 			</image>
 		</band>
 	</title>

@@ -184,8 +184,13 @@ public class ProdutoBean implements Serializable {
 			String fabDescricao = (String) filtros.get("fabricante.descricao");
 			
 			String caminho = Faces.getRealPath("/reports/produtos.jasper");
+			
+			String caminhoBanner = Faces.getRealPath("/resources/images/b01.png");
 
 			Map<String, Object> parametros = new HashMap<>();
+			
+			parametros.put("CAMINHO_BANNER", caminhoBanner);
+			
 			if (proDescricao == null) {
 				parametros.put("PRODUTO_DESCRICAO", "%%");
 			}else {
