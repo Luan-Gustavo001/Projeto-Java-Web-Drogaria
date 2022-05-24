@@ -103,6 +103,7 @@ public class VendaBean implements Serializable {
 		vendas = vendaDAO.listar("horario");
 	}
 
+	@SuppressWarnings("deprecation")
 	public void adicionar(ActionEvent evento) {
 		Produto produto = (Produto) evento.getComponent().getAttributes().get("produtoSelecionado");
 
@@ -168,6 +169,7 @@ public class VendaBean implements Serializable {
 			venda.setHorario(new Date());
 			venda.setCliente(null);
 			venda.setFuncionario(null);
+			
 			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 			funcionarios = funcionarioDAO.listarOrdenado("");
 
@@ -185,12 +187,16 @@ public class VendaBean implements Serializable {
 				Messages.addFlashGlobalError("Informe no minimo um item para prosseguir com a venda");
 				return;
 			}
-
 			VendaDAO vendaDAO = new VendaDAO();
 			vendaDAO.salvar(venda, itensVenda);
+			
+			venda = new Venda();
+			venda.setPrecoTotal(new BigDecimal("0.00"));
 
-			novo();
+			ProdutoDAO produtoDAO = new ProdutoDAO();
+			produtos = produtoDAO.listar("descricao");
 
+			itensVenda = new ArrayList<>();
 			Messages.addFlashGlobalInfo("Venda realizada com sucesso");
 
 		} catch (RuntimeException erro) {

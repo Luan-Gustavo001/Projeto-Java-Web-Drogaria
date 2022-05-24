@@ -55,5 +55,4 @@ public class ItemVenda extends GenericDomain {
 	public void setVenda(Venda venda) {
 		this.venda = venda;
 	}
-
 }
