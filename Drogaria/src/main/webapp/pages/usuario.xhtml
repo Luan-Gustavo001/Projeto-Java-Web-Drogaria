@@ -31,8 +31,8 @@
 					<h:outputText value="#{usuario.pessoa.cpf}" />
 				</p:column>
 
-				<p:column headerText="Tipo" filterBy="" sortBy="#{usuario.tipoFormatado}">
-					<h:outputText value="#{usuario.tipoFormatado}" />
+				<p:column headerText="Tipo" filterBy="" sortBy="#{usuario.tipoUsuario.toString()}">
+					<h:outputText value="#{usuario.tipoUsuario.toString()}" />
 				</p:column>
 				
 				<p:column headerText="Ativo" filterBy="" sortBy="#{usuario.ativoFormatado}">
@@ -99,11 +99,11 @@
 				</p:password>
 
 				<p:outputLabel  for="tipo" value="Tipo"  />
-				<p:selectOneRadio id="tipo" value="#{usuarioBean.usuario.tipo}" 
+				<p:selectOneRadio id="tipo" value="#{usuarioBean.usuario.tipoUsuario}" 
 				required="true" requiredMessage="O campo tipo é obrigatório">
-					<f:selectItem itemValue="A" itemLabel="Administrador" />
-					<f:selectItem itemValue="G" itemLabel="Gerente" />
-					<f:selectItem itemValue="R" itemLabel="Recepcionista" />
+					<f:selectItem itemValue="ADIMINISTRADOR" itemLabel="Administrador" />
+					<f:selectItem itemValue="GERENTE" itemLabel="Gerente" />
+					<f:selectItem itemValue="RECEPCAO" itemLabel="Recepcionista" />
 				</p:selectOneRadio>
 				
 				<p:outputLabel for="ativo" value="Ativo:" />

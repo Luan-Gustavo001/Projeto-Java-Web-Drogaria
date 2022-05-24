@@ -17,7 +17,7 @@ import org.omnifaces.util.Messages;
 
 import com.google.gson.Gson;
 
-//import br.com.luan.drogaria.dao.FabricanteDAO;
+
 import br.com.luan.drogaria.domain.Fabricante;
 
 @SuppressWarnings("serial")
@@ -47,8 +47,7 @@ public class FabricanteBean implements Serializable {
 	public void listar() {
 		try {
 
-//		FabricanteDAO fabricanteDAO = new FabricanteDAO();
-//		fabricantes = fabricanteDAO.listar();
+
 
 			Client cliente = ClientBuilder.newClient();
 			WebTarget caminho = cliente.target("http://192.168.0.114:8080/Drogaria/rest/fabricante");
@@ -71,11 +70,7 @@ public class FabricanteBean implements Serializable {
 
 	public void salvar() {
 		try {
-//			FabricanteDAO fabricanteDAO = new FabricanteDAO();
-//			fabricanteDAO.merge(fabricante);
-//			
-//			fabricante  = new Fabricante();
-//			fabricantes = fabricanteDAO.listar();
+			
 			Client cliente = ClientBuilder.newClient();
 			WebTarget caminho = cliente.target("http://192.168.0.114:8080/Drogaria/rest/fabricante");
 

@@ -3,6 +3,7 @@ package br.com.luan.drogaria.bean;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,10 +12,15 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.component.datatable.DataTable;
+
+import com.google.gson.Gson;
 
 import br.com.luan.drogaria.dao.CidadeDAO;
 import br.com.luan.drogaria.dao.EstadoDAO;
@@ -97,8 +103,14 @@ public class PessoaBean implements Serializable {
 
 			estado = new Estado();
 
-			EstadoDAO estadoDAO = new EstadoDAO();
-			estados = estadoDAO.listar();
+			Client cliente = ClientBuilder.newClient();
+			WebTarget caminho = cliente.target("http://192.168.0.114:8080/Drogaria/rest/estado");
+			String json = caminho.request().get(String.class);
+
+			Gson gson = new Gson();
+			Estado[] vetor = gson.fromJson(json, Estado[].class);
+
+			estados = Arrays.asList(vetor);
 
 			cidades = new ArrayList<Cidade>();
 
@@ -165,8 +177,15 @@ public class PessoaBean implements Serializable {
 	public void popular() {
 		try {
 			if (estado != null) {
-				CidadeDAO cidadeDAO = new CidadeDAO();
-				cidades = cidadeDAO.buscarPorEstado(estado.getCodigo());
+				Client cliente = ClientBuilder.newClient();
+				WebTarget caminho = cliente.target("http://192.168.0.114:8080/Drogaria/rest/cidade/{estadoCodigo}").resolveTemplate("estadoCodigo", estado.getCodigo());
+				String json = caminho.request().get(String.class);
+
+				Gson gson = new Gson();
+				Cidade[] vetor = gson.fromJson(json, Cidade[].class);
+
+				cidades = Arrays.asList(vetor);
+				
 			} else {
 				cidades = new ArrayList<>();
 			}

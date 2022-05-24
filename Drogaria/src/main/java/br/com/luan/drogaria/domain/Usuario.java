@@ -2,9 +2,13 @@ package br.com.luan.drogaria.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+
+import br.com.luan.drogaria.enumeracao.TipoUsuario;
 @SuppressWarnings("serial")
 @Entity
 public class Usuario extends GenericDomain {
@@ -15,8 +19,16 @@ public class Usuario extends GenericDomain {
 	private String senhaSemCriptografia;
 	
 	@Column(nullable = false)
-	private Character tipo;
-	
+	@Enumerated(EnumType.STRING)
+	private TipoUsuario tipoUsuario;
+
+	@Column(nullable = false)
+	private Boolean ativo;
+
+	@OneToOne
+	@JoinColumn(nullable = false)
+	private Pessoa pessoa;
+
 	public String getSenha() {
 		return senha;
 	}
@@ -33,39 +45,20 @@ public class Usuario extends GenericDomain {
 		this.senhaSemCriptografia = senhaSemCriptografia;
 	}
 
-	public Character getTipo() {
-		return tipo;
-	}
-	
-	@Transient
-	public String getTipoFormatado() {
-		String tipoFormatado = null;
-		if (tipo == 'A') {
-			tipoFormatado = "Administrador";
-		}else if (tipo == 'R') {
-			tipoFormatado = "Recepcionista";
-		}else if (tipo == 'G') {
-			tipoFormatado = "Gerente";
-		}
-		return tipoFormatado;
-	}
-
-	public void setTipo(Character tipo) {
-		this.tipo = tipo;
-	}
-
 	public Boolean getAtivo() {
 		return ativo;
 	}
 	
-	public String getAtivoFormatado() {
+	@Transient
+	public String getAtivoFormatado(){
 		String ativoFormatado = "Não";
-		if (ativo) {
+		
+		if(ativo){
 			ativoFormatado = "Sim";
 		}
-	return	ativoFormatado;
-			
-		}
+		
+		return ativoFormatado;
+	}
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
@@ -79,12 +72,14 @@ public class Usuario extends GenericDomain {
 		this.pessoa = pessoa;
 	}
 
-	@Column(nullable = false)
-	private Boolean ativo;
+	public TipoUsuario getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(TipoUsuario tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
 	
-	@OneToOne
-	@JoinColumn(nullable = false)
-	private Pessoa pessoa;
 	
 }
-
+	

@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import br.com.luan.drogaria.domain.Pessoa;
 import br.com.luan.drogaria.domain.Usuario;
+import br.com.luan.drogaria.enumeracao.TipoUsuario;
 
 public class UsuarioDAOTest {
 	// -------------- SALVAR ----------------------
@@ -28,7 +29,7 @@ public class UsuarioDAOTest {
 		
 		SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());
 		usuario.setSenha(hash.toHex());
-		usuario.setTipo('R');
+		usuario.setTipoUsuario(TipoUsuario.RECEPCAO);
 
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		usuarioDAO.salvar(usuario);
@@ -61,7 +62,7 @@ public class UsuarioDAOTest {
 			System.out.println("Código do Fabricante : " + usuario.getCodigo());
 			System.out.println("Nome do Usuario : " + usuario.getPessoa().getNome());
 			System.out.println("Senha : " + usuario.getSenha());
-			System.out.println("Tipo : " + usuario.getTipo());
+			System.out.println("Tipo : " + usuario.getTipoUsuario());
 
 			if (usuario.getAtivo() == true) {
 				System.out.println("Ativo : ON");

@@ -52,7 +52,7 @@ public class UsuarioBean implements Serializable {
 	public void listar() {
 		try {
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
-			usuarios = usuarioDAO.listar("tipo");
+			usuarios = usuarioDAO.listar("tipoUsuario");
 
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao listar os usuarios");
