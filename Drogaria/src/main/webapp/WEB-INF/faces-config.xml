@@ -7,8 +7,4 @@
 	<lifecycle>
 		<phase-listener>br.com.luan.drogaria.util.AutenticacaoListener</phase-listener>
 	</lifecycle>
-
-
-
-
 </faces-config>

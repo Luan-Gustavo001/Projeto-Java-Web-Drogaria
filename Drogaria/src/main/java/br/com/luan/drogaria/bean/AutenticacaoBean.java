@@ -1,7 +1,6 @@
 package br.com.luan.drogaria.bean;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;

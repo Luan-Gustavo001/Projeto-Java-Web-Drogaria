@@ -18,7 +18,7 @@
 		<property name="connection.pool_size">10</property>
 
 		<!-- SQL dialect -->
-		<property name="dialect">org.hibernate.dialect.MySQL55Dialect</property>
+		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
 
 		<!-- Gerenciamento do Contexto das Sessões -->
 		<property name="current_session_context_class">thread</property>
