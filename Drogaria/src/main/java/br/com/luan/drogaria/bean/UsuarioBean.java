@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import br.com.luan.drogaria.dao.PessoaDAO;
@@ -84,9 +85,9 @@ public class UsuarioBean implements Serializable {
 			PessoaDAO pessoaDAO = new PessoaDAO();
 			pessoas = pessoaDAO.listar("nome");
 
-			Messages.addFlashGlobalInfo("Usuario salvo com sucesso");
+			Messages.addFlashGlobalInfo(Faces.getResourceBundle("msg").getString("usuarioSalvo"));
 		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao tentar salvar um usuário");
+			Messages.addFlashGlobalError(Faces.getResourceBundle("msg").getString("usuarioErro"));
 			erro.printStackTrace();
 		}
 	}
