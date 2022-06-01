@@ -12,24 +12,24 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Drogaria do Luan</title>
 	<h:outputStylesheet library="css" name="estilos.css" />
-	<h:outputScript library="js" name="scripts.js"/>
+	<h:outputScript library="js" name="scripts.js" />
 </h:head>
 <h:body>
 	<p:growl id="mensagem" />
-	
-		<div id="geral">
-			<div id="topo" class="divTopo">
-				<p:graphicImage library="images" name="b01.png"
-					styleClass="imagemCentralizada" >
-					
-					</p:graphicImage>
-			</div>
 
-			<div id="cabecalho" class="divcabecalho">
+	<div id="geral">
+		<div id="topo" class="divTopo">
+			<p:graphicImage library="images" name="b01.png"
+				styleClass="imagemCentralizada">
+
+			</p:graphicImage>
+		</div>
+
+		<div id="cabecalho" class="divcabecalho">
 			<h:form>
 				<p:menubar>
 					<p:submenu label="Arquivo">
-						<p:menuitem value="sair" />
+						<p:menuitem value="sair" url="/pages/autenticacao.xhtml" />
 					</p:submenu>
 
 					<p:submenu label="Cadastro">
@@ -45,17 +45,24 @@
 					<p:submenu label="Loja">
 						<p:menuitem value="Venda" url="/pages/vendas.xhtml" />
 					</p:submenu>
-					
+
 					<p:submenu label="Ajuda">
-						<p:menuitem value="sobre" />
+						<p:menuitem value="sobre" url="/pages/sobre.xhtml" />
 					</p:submenu>
 				</p:menubar>
-				</h:form>
-			</div>
-			<div id="conteudo">
-				<ui:insert name="conteudo" />
-			</div>
+			</h:form>
 		</div>
-	
+		<div id="conteudo">
+			<ui:insert name="conteudo" />
+		</div>
+	</div>
+	<p:separator />
+	<h:form>
+				Sistema Criado por Luan auxiliar de programador web <a href="http://gemmap.com.br/">GEMMAP SISTEMAS</a> copyright © 2022.
+			
+
+				<a href="#"></a>
+				
+	</h:form>
 </h:body>
 </html>
