@@ -8,12 +8,36 @@
 	template="/templates/modelo.xhtml">
 
 	<ui:define name="conteudo">
-		<h:outputText
-			value="Bem vindo #{autenticacaoBean.usuarioLogado.pessoa.nome}" />
+		<div>
+			<h:outputText
+				value="Bem vindo #{autenticacaoBean.usuarioLogado.pessoa.nome}" />
+		</div>
+
+		<div class="banner">
+			
+			<h:form styleClass="">
+			<div id="botton" align="center">
+			<p:commandButton type="button" onclick="PF('switcher').previous();"
+				icon="ui-icon-circle-triangle-w" id="prev" />
+			<p:commandButton type="button" onclick="PF('switcher').next();"
+				icon="ui-icon-circle-triangle-e" id="next" />
+			</div>
+			<div align="center">
+			<p:imageSwitch effect="shuffle" widgetVar="switcher" id="manuelSwitcher"
+				slideshowAuto="false" >
+				<ui:repeat value="#{indexbean.images}" var="image"
+					id="manuelSwitcherImages">
+					<p:graphicImage name="images/banner/#{image}" id="image" styleClass="bannerCentralizado" />
+				</ui:repeat>
+			</p:imageSwitch>
+			</div>
+			</h:form>
+		</div>
+
+
+
+
 	</ui:define>
-	
-	<div class="card">
-    <h5>Static Image</h5>
-    <p:graphicImage name="banner/01.jpg" library="images"/>
-</div>
+	<ui:define name="footer" />
+
 </ui:composition>
