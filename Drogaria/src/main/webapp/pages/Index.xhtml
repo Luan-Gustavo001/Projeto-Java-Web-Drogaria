@@ -15,7 +15,7 @@
 
 		<div class="banner">
 			
-			<h:form styleClass="">
+			<h:form styleClass="bannerCentralizado" >
 			<div id="botton" align="center">
 			<p:commandButton type="button" onclick="PF('switcher').previous();"
 				icon="ui-icon-circle-triangle-w" id="prev" />
@@ -27,7 +27,7 @@
 				slideshowAuto="false" >
 				<ui:repeat value="#{indexbean.images}" var="image"
 					id="manuelSwitcherImages">
-					<p:graphicImage name="images/banner/#{image}" id="image" styleClass="bannerCentralizado" />
+					<p:graphicImage name="images/banner/#{image}" id="image" />
 				</ui:repeat>
 			</p:imageSwitch>
 			</div>
