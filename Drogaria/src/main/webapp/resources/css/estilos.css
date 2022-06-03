@@ -15,3 +15,8 @@
 .divCabecalho{
 	padding-bottom: 5px;
 }
+
+.bannerCentralizado{
+	height: auto;
+    max-width: 100%;
+}
